@@ -1,0 +1,17 @@
+{
+    "manifest_version": 3,
+    "name": "HorseTools",
+    "version": "0.3",
+    "description": "My Tools For Horse reality Wab Game",
+    "permissions": ["storage", "tabs", "cookies"],
+    "host_permissions": ["*://*.horsereality.com/*"],
+    "content_scripts": [{
+        "matches": ["*://*.horsereality.com/*"],
+        "js": ["keyBinds.js", "horsePage.js", "tools.js"]
+    }],
+    "action": {
+        "default_title": "Click to view a popup",
+        "default_popup": "popup.html"
+    }
+
+}
