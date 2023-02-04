@@ -10,7 +10,6 @@
 
     const callNeeded = (result) => {
         document.addEventListener("keyup", handleHorseKeyEvents)
-        console.log("te")
     }
 
 
@@ -63,10 +62,110 @@
                 document.getElementsByClassName("user-nav")[0].getElementsByClassName("btn")[0].click();
             }
             if (e.code === horseConfig["keybinds"]["trainHorse"] && horsePagePattern.test(window.location.href)) {
-                console.log("train")
+                tab = document.getElementById("tab_training2").getElementsByClassName("table_con")[0]
+
+                levelList = document.getElementsByClassName("grid_4 training_right")[0].getElementsByClassName("block")[3].getElementsByClassName("trainbar")
+                lastVal = levelList[levelList.length - 1].getElementsByClassName("value")[0].textContent.replace("%", "").trim()
+
+
+                if (tab) {
+                    terrainList = tab.getElementsByClassName("horsetraining")[0]
+                    timeList = tab.getElementsByClassName("horsetraining")[1]
+                    taskList = tab.getElementsByClassName("horsetraining")[2]
+                    energy = document.getElementById("energy").textContent.trim().split(" ")[1].replace("%", "").trim()
+
+                    terrainList = terrainList.getElementsByClassName("terrain-click")
+                    timeList = timeList.getElementsByClassName("duration-click")
+                    taskList = taskList.getElementsByClassName("traincon")
+
+                    if (!horseConfig["tools"]) {
+                        return
+                    }
+                    tempTextList = ["toolTrainPrimaryTerrain", "toolTrainSecondaryTerrain", " toolTrainPrimaryTime", "toolTrainSecondaryTime"];
+                    for (const text of tempTextList) {
+                        if (!horseConfig["tools"][text.trim()]) {
+                            console.log(horseConfig["tools"][text.trim()])
+                            return
+                        }
+                    }
+
+                    terrainTypePrimary = horseConfig["tools"]["toolTrainPrimaryTerrain"]
+                    terrainTypeSecondary = horseConfig["tools"]["toolTrainSecondaryTerrain"]
+                    durationTypePrimary = horseConfig["tools"]["toolTrainPrimaryTime"]
+                    durationTypeSecondary = horseConfig["tools"]["toolTrainSecondaryTime"]
+
+                    if (terrainTypePrimary != 3) {
+                        terrainList[terrainTypePrimary].click()
+                        timeList[durationTypePrimary].click()
+                        itemFinal = "";
+                        for (let i = 0; i < taskList.length; i++) {
+                            elem = taskList[i];
+                            val = taskList[i].getElementsByClassName("trainbar")[0].getElementsByClassName("value")[0].textContent.trim().replace("%", "");
+
+                            if (val < 100) {
+                                itemFinal = elem;
+                                break
+                            }
+                            itemFinal = elem
+                        }
+                        itemFinalval = itemFinal.getElementsByClassName("trainbar")[0].getElementsByClassName("value")[0].textContent.trim().replace("%", "");
+                        if (lastVal != 100 && itemFinalval == 100) {
+                            return
+                        }
+                        if (itemFinalval < 100) {
+                            itemFinal.getElementsByClassName("action-train")[0].click();
+                            return
+                        }
+
+                    }
+
+                    if (terrainTypePrimary == 3) {
+                        terrainList[terrainTypePrimary].click()
+                        itemFinal = "";
+                        itemFinal = tab.getElementsByClassName("duration-click")[durationTypePrimary].getElementsByClassName("_train-round")[0]
+                        itemFinal.click();
+                        return
+                    }
+                    if (terrainTypeSecondary != 3) {
+                        terrainList[terrainTypeSecondary].click()
+                        timeList[durationTypeSecondary].click()
+                        itemFinal = "";
+                        for (let i = 0; i < taskList.length; i++) {
+                            elem = taskList[i];
+                            val = taskList[i].getElementsByClassName("trainbar")[0].getElementsByClassName("value")[0].textContent.trim().replace("%", "");
+
+                            if (val < 100) {
+                                itemFinal = elem;
+                                break
+                            }
+                            itemFinal = elem
+                        }
+                        itemFinalval = itemFinal.getElementsByClassName("trainbar")[0].getElementsByClassName("value")[0].textContent.trim().replace("%", "");
+                        if (itemFinalval <= 100) {
+                            itemFinal.getElementsByClassName("action-train")[0].click();
+                            return
+                        }
+                    }
+
+                    if (terrainTypeSecondary == 3) {
+                        terrainList[terrainTypeSecondary].click()
+                        itemFinal = "";
+                        itemFinal = tab.getElementsByClassName("duration-click")[durationTypeSecondary].getElementsByClassName("_train-round")[0]
+                        itemFinal.click();
+                    }
+                }
             }
             if (e.code === horseConfig["keybinds"]["careForHorse"] && horsePagePattern.test(window.location.href)) {
-                console.log("care")
+
+                tab = document.getElementById("tab_summary2").getElementsByClassName("table_con")[0]
+                if (tab) {
+                    careList = tab.getElementsByClassName("half_block")[0].getElementsByClassName("horse_blocks");
+                    for (let i = 0; i < careList.length; i++) {
+                        careList[i].click();
+                    }
+                }
+
+
             }
             if (e.code === horseConfig["keybinds"]["tabSummary"] && horsePagePattern.test(window.location.href)) {
                 document.getElementById("tab_summary").click();
@@ -112,10 +211,6 @@
                 if (result.length == 2) {
                     result[0].click();
                 }
-            }
-            if (e.code === horseConfig["keybinds"]["updateTagline"] && horsePagePattern.test(window.location.href)) {
-                currentHorse = document.URL.split("/")[4].trim();
-                chrome.storage.local.get(currentHorse, (result) => { console.log(result) });
             }
             if (e.code === horseConfig["keybinds"][""] && horsePagePattern.test(window.location.href)) {
 

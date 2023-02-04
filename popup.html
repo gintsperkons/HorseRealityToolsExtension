@@ -223,15 +223,6 @@
                         </button>
                     </div>
                 </div>
-                <div class="hFlex row">
-                    <p class="bindDescription">Auto fill tagline in update</p>
-                    <div class="buttonContainer hFlex">
-                        <button class="keySetButton" bindName="updateTagline"></button>
-                        <button class="keyRemoveButton" bindName="updateTagline">
-                            <img src="icons/remove.png" class="keyRemoveButtonImg" alt="remove keybind" >
-                        </button>
-                    </div>
-                </div>
             </section>
             </div>
         </div>
@@ -255,11 +246,79 @@
                             </label>
                     </div>
                 </div>
+                <hr>
+                <div class="hFlex row">
+                    <label for="toolTrainPrimaryTerrain">Choose primary training terrain:</label>
+                    <select name="toolTrainPrimaryTerrain" id="toolTrainPrimaryTerrainList" class="toolTrainList">
+                        <option value="0">Arena</option>
+                        <option value="1">Track</option>
+                        <option value="2">Trail</option>
+                        <option value="3">Roundpen</option>
+                    </select>
+                    <label for="toolTrainPrimaryTime">Choose primary training time:</label>
+                    <select name="toolTrainPrimaryTime" id="toolTrainPrimaryTimeList" class="toolTrainList">
+                        <option value="0">15</option>
+                        <option value="1">30</option>
+                        <option value="2">45</option>
+                        <option value="3">60</option>
+                        </select>
+                </div>
+                <div class="hFlex row">
+                    <label for="toolTrainSecondaryTerrain">Choose secondary training terrain:</label>
+                    <select name="toolTrainSecondaryTerrain" id="toolTrainSecondaryTerrainList" class="toolTrainList">
+                        <option value="0">Arena</option>
+                        <option value="1">Track</option>
+                        <option value="2">Trail</option>
+                        <option value="3">Roundpen</option>
+                    </select>
+                    <label for="toolTrainSecondaryTime">Choose secondary training time:</label>
+                    <select name="toolTrainSecondaryTime" id="toolTrainSecondaryTimeList" class="toolTrainList">
+                        <option value="0">15</option>
+                        <option value="1">30</option>
+                        <option value="2">45</option>
+                        <option value="3">60</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div id="templates" class="tabContent">
             <div class="vFlex">
-                <div class="hFlex row">3</div>
+                <div class="hFlex row">
+                    <p class="templateTitle">
+                        Name
+                    </p>
+                    <div class="hFlex row">
+                        <input class="templateInput" type="text" name="name" id="nameTemplate">
+                        <button class="removeTemplateButton" templateName="nameTemplate">
+                            <img src="icons/remove.png" class="keyRemoveButtonImg" alt="remove keybind" >
+                        </button>
+                    </div>
+                </div>
+                <div class="hFlex rowEnd">
+                    <label for="nameTemplate">Choose template:</label>
+                    <select name="nameTemplate" id="nameTemplateList" class="templateList">
+                        <option value="addNew">New</option>
+                    </select>
+                </div>
+                <hr>
+                <div class="hFlex row">
+                    <p class="templateTitle">
+                        Tagline
+                    </p>
+                    <div class="hFlex row">
+                        <input class="templateInput" type="text" name="tagline" id="taglineTemplate">
+                        <button class="removeTemplateButton" templateName="taglineTemplate">
+                            <img src="icons/remove.png" class="keyRemoveButtonImg" alt="remove keybind" >
+                        </button>
+                    </div>
+                </div>
+                <div class="hFlex rowEnd">
+                    <label for="taglineTemplate">Choose template:</label>
+                    <select name="taglineTemplate" id="taglineTemplateList" class="templateList">
+                            <option value="addNew">New</option>
+                        </select>
+                </div>
+                <hr>
             </div>
         </div>
         <div id="export" class="tabContent">

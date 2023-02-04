@@ -60,6 +60,27 @@
             return result;
         }
 
+        const addTemplateLists = () => {
+            if (!horseConfig["templates"]) {
+                return;
+            }
+
+            for (const item of document.getElementsByClassName("templateList")) {
+                console.log(horseConfig["templates"][item.getAttribute("name")])
+                if (!horseConfig["templates"][item.getAttribute("name")]) {
+                    continue;
+                }
+                for (key of Object.keys(horseConfig["templates"][item.getAttribute("name")])) {
+                    el = document.createElement("option");
+                    el.data = horseConfig["templates"][item.getAttribute("name")][key]
+                    el.value = key;
+                    el.textContent = key;
+                    item.appendChild(el);
+                }
+            }
+        }
+
+
         const setConfig = (result) => {
             if (!result) {
                 horseConfig = {};
@@ -68,7 +89,16 @@
             } else {
                 horseConfig = result["horseConfig"];
             }
+            if (horseConfig["tools"]) {
+                if (horseConfig["tools"]["autoCare"] != document.getElementById("autoCare").checked) {
+                    document.getElementById("autoCare").click()
+                }
+                if (horseConfig["tools"]["autoTrain"] != document.getElementById("autoTrain").checked) {
+                    document.getElementById("autoTrain").click()
+                }
+            }
             showCurrent();
+            addTemplateLists();
             addListeners();
         }
 
@@ -89,7 +119,6 @@
         }
 
         const handleTitleEvents = (event) => {
-            console.log(event)
             let target = event.path[1];
             if (event.target.tagName === "DIV") {
                 target = event.target;
@@ -99,7 +128,6 @@
             }
             horseConfig["selectedTab"] = target.getAttribute("tab-name");
             showCurrent();
-            console.log(target)
         }
 
         const removeKeyBind = (bind) => {
@@ -118,12 +146,81 @@
             saveData();
         }
 
+        const inputTextChange = (e) => {
+            if (!horseConfig["templates"]) {
+                horseConfig["templates"] = {}
+            }
+            if (!horseConfig["templates"][e.target.id]) {
+                horseConfig["templates"][e.target.id] = {}
+            }
+            var count = 0;
+            if (document.getElementById(e.target.id + "List").value == "addNew") {
+                count = 1;
+
+                while (true) {
+                    if (!horseConfig["templates"][e.target.id][count]) {
+                        if (!document.getElementById(e.target.id + "List").querySelector("option[value='" + count + "']")) {
+
+                            console.log(count)
+                            el = document.createElement("option");
+                            el.value = count;
+                            el.textContent = count;
+                            document.getElementById(e.target.id + "List").appendChild(el);
+                        }
+                        document.getElementById(e.target.id + "List").value = count;
+                        break;
+                    }
+                    count = 1 + (count * 1);
+                }
+            } else {
+                count = document.getElementById(e.target.id + "List").value
+            }
+            console.log(count)
+            horseConfig["templates"][e.target.id][count] = e.target.value
+            saveData()
+        }
+
+        const selectElementChangeValue = (e) => {
+
+            inputId = e.target.id.replace("List", "");
+            el = document.getElementById(inputId);
+            if (e.target.value == "addNew") {
+                el.value = "";
+                return
+            }
+            dataElement = document.querySelector("option[value='" + e.target.value + "']")
+            el.value = dataElement.data;
+            console.log(e);
+            saveData()
+        }
+
+        const removeTemplate = (list, value) => {
+            if (value == "addNew") {
+                return
+            }
+            list = list.replace("List", "")
+            if ((!horseConfig["templates"]) || (!horseConfig["templates"][list])) {
+                return;
+            }
+            document.querySelector("option[value='" + value + "']").remove()
+            delete horseConfig["templates"][list][value]
+            saveData()
+        }
+
+        const setTrainingInfo = (e) => {
+            if (!horseConfig["tools"]) {
+                horseConfig["tools"] = {}
+            }
+            horseConfig["tools"][e.target.id.replace("List", "")] = e.target.value
+            saveData()
+        }
+
         const addListeners = () => {
             for (const element of document.getElementsByClassName("tabTitle")) {
                 element.addEventListener("click", handleTitleEvents);
             }
             for (const but of document.getElementsByClassName("keySetButton")) {
-                if (but.getAttribute("bindName")) {
+                if (horseConfig["keybinds"] && horseConfig["keybinds"][but.getAttribute("bindName")] && but.getAttribute("bindName")) {
                     but.textContent = horseConfig["keybinds"][but.getAttribute("bindName")]
                 }
                 if (!but.textContent) {
@@ -163,6 +260,26 @@
                         });
                     }
                 })
+            }
+            for (const input of document.getElementsByClassName("templateInput")) {
+                input.addEventListener("input", inputTextChange)
+            }
+            for (const templateList of document.getElementsByClassName("templateList")) {
+                templateList.addEventListener("change", selectElementChangeValue)
+            }
+            for (const templateList of document.getElementsByClassName("toolTrainList")) {
+                if (!horseConfig["tools"]) {} else if (!horseConfig["tools"][templateList.id.replace("List", "")]) {} else {
+                    templateList.value = horseConfig["tools"][templateList.id.replace("List", "")]
+                }
+                templateList.addEventListener("change", setTrainingInfo)
+            }
+            for (const but of document.getElementsByClassName("removeTemplateButton")) {
+                but.addEventListener("click", () => {
+                    document.getElementById(but.getAttribute("templateName")).value = "";
+                    el = document.getElementById(but.getAttribute("templateName") + "List")
+                    removeTemplate(but.getAttribute("templateName") + "List", el.value);
+                    el.value = "addNew";
+                });
             }
         }
 

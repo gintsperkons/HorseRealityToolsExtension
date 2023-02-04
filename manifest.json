@@ -7,7 +7,7 @@
     "host_permissions": ["*://*.horsereality.com/*"],
     "content_scripts": [{
         "matches": ["*://*.horsereality.com/*"],
-        "js": ["keyBinds.js", "horsePage.js", "tools.js"]
+        "js": ["keyBinds.js", "horsePage.js", "templates.js", "tools.js"]
     }],
     "action": {
         "default_title": "Click to view a popup",

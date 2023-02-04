@@ -110,6 +110,7 @@
         let tab = document.getElementsByClassName("horse_left")[0];
         currentHorseObj["name"] = tab.getElementsByTagName("h1")[0].textContent.trim();
         currentHorseObj["tagline"] = tab.getElementsByTagName("p")[0].textContent.trim();
+        currentHorseObj["gender"] = tab.getElementsByTagName("h1")[0].getElementsByTagName("img")[0].getAttribute("alt").trim();
         let infotext = tab.getElementsByClassName("infotext")[0];
         currentHorseObj["lifeNumber"] = infotext.getElementsByClassName("right")[0].textContent.replace("#", "").trim();
         currentHorseObj["breed"] = infotext.getElementsByClassName("right")[1].textContent.trim();
@@ -138,7 +139,6 @@
     }
 
     const getSummaryData = () => {
-        console.log(tabList["SUMMARY"])
         if (!currentHorseObj["summary"]) {
             currentHorseObj["summary"] = {};
         }
@@ -161,7 +161,6 @@
     }
 
     const getTrainingData = () => {
-        console.log(tabList["TRAINING"])
         if (!currentHorseObj["training"]) {
             currentHorseObj["training"] = {};
         }
@@ -180,12 +179,13 @@
     }
 
     const getGeneticData = () => {
-        console.log(tabList["GENETICS"])
         if (!currentHorseObj["genetics"]) {
             currentHorseObj["genetics"] = {};
         }
         tab = document.getElementById(tabList["GENETICS"])
+        genetics = tab.getElementsByClassName("genetics")[1]
         tableGP = tab.getElementsByClassName("genetic_table_row")[13]
+        currentHorseObj["genetics"]["geneticPotential"] = genetics.getElementsByClassName("top")[0].getElementsByClassName("right")[0].textContent.split(" ")[2].trim()
         currentHorseObj["genetics"]["acceleration"] = tableGP.getElementsByClassName("left")[0].getElementsByClassName("genetic_stats")[0].textContent
         currentHorseObj["genetics"]["agility"] = tableGP.getElementsByClassName("left")[0].getElementsByClassName("genetic_stats")[1].textContent
         currentHorseObj["genetics"]["balance"] = tableGP.getElementsByClassName("left")[0].getElementsByClassName("genetic_stats")[2].textContent
@@ -210,7 +210,6 @@
     }
 
     const getAchievementData = () => {
-        console.log(tabList["ACHIEVEMENTS"])
         if (!currentHorseObj["achievements"]) {
             currentHorseObj["achievements"] = {};
         }
@@ -232,7 +231,6 @@
     }
 
     const getOffspringData = () => {
-        console.log(tabList["OFFSPRING"])
         if (!currentHorseObj["offsprings"]) {
             currentHorseObj["offsprings"] = {};
         }
@@ -242,14 +240,18 @@
     }
 
     const getHealthData = () => {
-        console.log(tabList["HEALTH"])
         if (!currentHorseObj["health"]) {
             currentHorseObj["health"] = {};
         }
         tab = document.getElementById(tabList["HEALTH"])
 
         textList = tab.getElementsByTagName("p")[0].innerHTML.split("<br>")
-        currentHorseObj["health"]["fertility"] = textList[0].split("</strong>")[1].trim()
+        try {
+            currentHorseObj["health"]["fertility"] = textList[0].split("</strong>")[1].trim()
+        } catch {
+            currentHorseObj["health"]["fertility"] = "unknown"
+        }
+
         currentHorseObj["health"]["colicResistance"] = textList[4].split("</strong>")[1].trim()
         currentHorseObj["health"]["hoofQuality"] = textList[5].split("</strong>")[1].trim()
         currentHorseObj["health"]["backProblems"] = textList[6].split("</strong>")[1].trim()
@@ -259,7 +261,6 @@
     }
 
     const getUpdateData = () => {
-        console.log(tabList["UPDATE"])
         if (!currentHorseObj["update"]) {
             currentHorseObj["update"] = {};
         }
@@ -294,7 +295,6 @@
                 break;
 
             default:
-                printResult("Unknown tab " + tab);
                 break;
         }
     }
@@ -352,7 +352,6 @@
         removeOld(result)
         updateLast();
         getCurrentTab();
-        chrome.storage.local.get(null, printResult);
     }
 
 
