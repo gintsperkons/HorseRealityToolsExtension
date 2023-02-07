@@ -16,6 +16,14 @@ html {
     height: 599px;
 }
 
+a {
+    color: #ffffff;
+}
+
+a:hover {
+    color: var(--color-link);
+}
+
 p,
 button {
     font-size: medium;

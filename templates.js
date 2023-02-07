@@ -10,7 +10,7 @@
     const monthInSeconds = 2629743;
     const observerConfig = { attributes: true, attributeFilter: ["style"] };
 
-    const trainingTypes = ["Dressage", " Jumping", " Reining", " Eventing", " Endurance", " Racing ", " Driving"]
+    const trainingTypes = ["Dressage", "Jumping", "Reining", "Eventing", "Endurance", "Racing", "Driving"]
 
     const trainingToShort = {
         "Basic Training": "bat",
@@ -116,9 +116,11 @@
         advice = currentHorseObj["genetics"]["advice"];
         sentenceList = advice.trim().split(". ");
         lastWord = "";
+        console.log(sentenceList)
         while (lastWord === "") {
             lastSentence = sentenceList.pop();
-            for (const word of lastSentence.replace(",", "").replace(".", "").replace("-", "").split(" ")) {
+            lastSentence = lastSentence.replaceAll(",", "").replaceAll(".", "").replaceAll("-", "").replaceAll("'", "")
+            for (const word of lastSentence.split(" ")) {
                 for (const tt of trainingTypes) {
                     if (word.trim() === tt.trim()) {
                         lastWord = tt.trim();

@@ -24,6 +24,7 @@
             }
         }, 1500);
         setTimeout(function() {
+            arrowName = ""
             result = document.getElementsByClassName("horse_arrows")[0].getElementsByTagName("a");
             if (result.length == 1) {
                 arrowName = result[0].getElementsByTagName("img")[0].className;
@@ -33,6 +34,11 @@
             }
             if (result.length == 2) {
                 result[1].click();
+            }
+            if (arrowName == "left" && result.length == 1) {
+                horseConfig["tools"]["autoCare"] = false
+                console.log("autoCareTurnedOff")
+                saveData()
             }
         }, 3000);
 
@@ -144,6 +150,11 @@
             }
             if (result.length == 2) {
                 result[1].click();
+            }
+            if (arrowName == "left" && result.length == 1) {
+                horseConfig["tools"]["autoTrain"] = false
+                console.log("autoTrainTurnedOff")
+                saveData()
             }
         }, 3000);
 
