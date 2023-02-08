@@ -174,6 +174,16 @@
                 break
             }
         }
+        if (currentProgress == 100 && trainingLevelsToShorts[currentHorseObj["training"]["currentTrainingLevel"]] === "Base4") {
+            currentHorseObj["training"]["currentTrainingLevel"] = "Base Complete";
+        }
+        finalLevelNames = ["GrP", "R5", "CC4", "CEI4", "Champ"]
+        for (const name of finalLevelNames) {
+            if (currentProgress == 100 && (trainingLevelsToShorts[currentHorseObj["training"]["currentTrainingLevel"]] === name)) {
+                currentHorseObj["training"]["currentTrainingLevel"] = "Finish";
+                break;
+            }
+        }
 
         saveData();
     }

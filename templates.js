@@ -91,6 +91,8 @@
         "ISC 3": "ISC3",
         "ISC 4": "ISC4",
         "Grand Prix": "GrP",
+        "Base Complete": "BaseC",
+        "Finish": "Finsh"
     }
 
     const tabList = { "SUMMARY": "tab_summary2", "TRAINING": "tab_training2", "GENETICS": "tab_genetics2", "ACHIEVEMENTS": "tab_achievements2", "OFFSPRING": "tab_offspring2", "HEALTH": "tab_health2", "UPDATE": "tab_update2" };
