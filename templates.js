@@ -16,7 +16,15 @@
         "Basic Training": "bat",
         "Dressage": "dre",
         "Western Reining": "rei",
-        "Reining": "rei"
+        "Reining": "rei",
+        "Flat Racing": "rac",
+        "Racing": "rac",
+        "Dressage": "dre",
+        "Driving": "dri",
+        "Endurance": "end",
+        "Eventing": "eve",
+        "Show Jumping": "jum",
+        "Jumping": "jum"
     };
 
     const trainingLevelsToShorts = {

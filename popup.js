@@ -119,10 +119,8 @@
         }
 
         const handleTitleEvents = (event) => {
-            let target = event.path[1];
-            if (event.target.tagName === "DIV") {
-                target = event.target;
-            }
+            target = event.target;
+
             for (const element of document.getElementsByClassName("tabTitle")) {
                 element.style.color = ""
             }
